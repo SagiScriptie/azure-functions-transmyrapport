@@ -25,7 +25,7 @@ public class RandomTestHttpTriggerFunction {
         String name = request.getBody().orElse(query);
 
         if (name == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please in name in query or bodyyy").build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please in name in query or bodyyyyyyyy").build();
         } else {
             return request.createResponseBuilder(HttpStatus.OK).body("Hello, " + name).build();
         }
