@@ -26,6 +26,7 @@ public class ExportTransactionHttpTriggerFunction {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
         //TODO add try/catch block
+        //test trigger
         final ExportTransaction requestBody = httpRequestMessage.getBody();
         if (requestBody != null) {
             ExportTransaction exportTransaction = new ExportTransaction(
