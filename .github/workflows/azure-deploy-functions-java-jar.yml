@@ -9,7 +9,9 @@ env:
 on:
   push:
     branches:
-      - master/azure-functions-transmyrapport/src/main/java/org/sogeti/functions
+      - master
+    paths:
+      - azure-functions-transmyrapport/src/main/java/org/sogeti/functions
   workflow_dispatch:                                      # makes is possible to manual run workflow
 
 jobs:
