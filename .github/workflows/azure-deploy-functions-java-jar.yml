@@ -2,7 +2,7 @@ name: Deploy Java project transmyrapport to function app
 
 env:
   AZURE_FUNCTIONAPP_NAME: azure-function-1650971708752  	# set this to your function app name on Azure
-  POM_XML_DIRECTORY: 'azure-functions-transmyrapport'     # set this to the directory which contains pom.xml file
+  POM_XML_DIRECTORY: ''     # set this to the directory which contains pom.xml file
   POM_FUNCTIONAPP_NAME: azure-function-1650971708752      # set this to the function app name in your local development environment
   JAVA_VERSION: '1.8.x'                                   # set this to the Java version to use
 
