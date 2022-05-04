@@ -11,7 +11,7 @@ on:
     branches:
       - master
     paths:
-      - azure-functions-transmyrapport/src/main/java/org/sogeti/functions
+      - src/main/java/org/sogeti/functions
   workflow_dispatch:                                      # makes is possible to manual run workflow
 
 jobs:
