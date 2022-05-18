@@ -14,7 +14,7 @@ on:
   workflow_dispatch:                       # makes is possible to manual run workflow
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: windows-latest
     steps:
     - name: 'Checkout GitHub Action'
@@ -55,10 +55,7 @@ jobs:
         mvn azure-functions:package
         popd
 
-  deploy:
-    runs-on: windows-latest
-    steps:
-      - name: 'Run Azure Functions Action'                #login in Azure and deploy with publish profile
+    - name: 'Run Azure Functions Action'                #login in Azure and deploy with publish profile
       uses: Azure/functions-action@v1
       id: fa
       with:
