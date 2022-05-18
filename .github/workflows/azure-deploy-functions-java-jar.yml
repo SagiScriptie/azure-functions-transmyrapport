@@ -9,19 +9,43 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:         # makes is possible to manual run workflow
+  pull_request:
+    types: [opened, synchronize, reopened] # [pull request is created, commits pushed, closed pull request is reopend]
+  workflow_dispatch:                       # makes is possible to manual run workflow
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: windows-latest
     steps:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis sonar
 
     - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
       uses: actions/setup-java@v1
       with:
         java-version: ${{ env.JAVA_VERSION }}
+
+    - name: 'Cache SonarCloud Packages'
+      uses: actions/cache@v1
+      with:
+        path : ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache Maven packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Build and analyze
+      env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SagiScriptie_azure-functions-transmyrapport
 
     - name: 'Restore Project Dependencies Using Mvn'
       shell: pwsh
@@ -31,7 +55,10 @@ jobs:
         mvn azure-functions:package
         popd
 
-    - name: 'Run Azure Functions Action'                #login in Azure and deploy with publish profile
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - name: 'Run Azure Functions Action'                #login in Azure and deploy with publish profile
       uses: Azure/functions-action@v1
       id: fa
       with:
