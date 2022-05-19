@@ -1,8 +1,8 @@
-package org.sogeti.functions.models;
+package org.sogeti.functions.exportTransaction.models;
 
-import org.sogeti.functions.enums.ProductCategory;
-import org.sogeti.functions.enums.TransportationBy;
-import org.sogeti.functions.enums.VATRate;
+import org.sogeti.functions.exportTransaction.enums.ProductCategory;
+import org.sogeti.functions.exportTransaction.enums.TransportationBy;
+import org.sogeti.functions.exportTransaction.enums.VATRate;
 
 public class ExportTransaction {
     private String PartitionKey;

@@ -1,4 +1,4 @@
-package org.sogeti.functions.enums;
+package org.sogeti.functions.exportTransaction.enums;
 
 public enum VATRate {
     VAT21(21),

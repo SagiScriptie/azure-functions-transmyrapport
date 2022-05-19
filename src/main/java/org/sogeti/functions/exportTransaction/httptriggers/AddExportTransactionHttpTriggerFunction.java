@@ -1,23 +1,23 @@
-package org.sogeti.functions.httptriggers;
+package org.sogeti.functions.exportTransaction.httptriggers;
 
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import com.microsoft.azure.functions.annotation.TableOutput;
-import org.sogeti.functions.models.ExportTransaction;
+import org.sogeti.functions.exportTransaction.models.ExportTransaction;
 
 import java.util.UUID;
 
 /**
  * Azure Functions (ExportTransaction) with HTTP Trigger.
- * Endpoint: https://azure-function-1650971708752.azurewebsites.net/api/export-transaction
+ * Endpoint: https://azure-function-1650971708752.azurewebsites.net/api/add-export-transaction
  */
-public class ExportTransactionHttpTriggerFunction {
+public class AddExportTransactionHttpTriggerFunction {
     @FunctionName("addExportTransaction")
     public HttpResponseMessage run(
-            @HttpTrigger(name = "postExportTransaction", methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.ANONYMOUS, route = "export-transaction")
+            @HttpTrigger(name = "addExportTransaction", methods = {HttpMethod.POST},
+                    authLevel = AuthorizationLevel.ANONYMOUS, route = "add-export-transaction")
                     HttpRequestMessage<ExportTransaction> httpRequestMessage,
             @TableOutput(name = "ExportTransaction", tableName = "ExportTransaction",
                     connection = "AzureWebJobsStorage")
