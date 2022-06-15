@@ -12,13 +12,13 @@ import java.util.UUID;
 
 /**
  * Azure Functions (ExportTransaction) with HTTP Trigger.
- * Endpoint: https://azure-function-1650971708752.azurewebsites.net/api/add-export-transaction
+ * Endpoint: https://azure-function-1650971708752.azurewebsites.net/api/export-transaction
  */
 public class AddExportTransactionHttpTriggerFunction {
     @FunctionName("addExportTransaction")
     public HttpResponseMessage run(
             @HttpTrigger(name = "addExportTransaction", methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.ANONYMOUS, route = "add-export-transaction")
+                    authLevel = AuthorizationLevel.ANONYMOUS, route = "export-transaction")
                     HttpRequestMessage<Optional<ExportTransaction>> httpRequestMessage,
             @TableOutput(name = "ExportTransaction", tableName = "ExportTransaction",
                     connection = "AzureWebJobsStorage")
