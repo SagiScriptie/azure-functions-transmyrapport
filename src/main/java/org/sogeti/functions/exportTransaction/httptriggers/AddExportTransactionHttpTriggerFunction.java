@@ -7,6 +7,7 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 import com.microsoft.azure.functions.annotation.TableOutput;
 import org.sogeti.functions.exportTransaction.models.ExportTransaction;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -18,26 +19,26 @@ public class AddExportTransactionHttpTriggerFunction {
     public HttpResponseMessage run(
             @HttpTrigger(name = "addExportTransaction", methods = {HttpMethod.POST},
                     authLevel = AuthorizationLevel.ANONYMOUS, route = "add-export-transaction")
-                    HttpRequestMessage<ExportTransaction> httpRequestMessage,
+                    HttpRequestMessage<Optional<ExportTransaction>> httpRequestMessage,
             @TableOutput(name = "ExportTransaction", tableName = "ExportTransaction",
                     connection = "AzureWebJobsStorage")
                     OutputBinding<ExportTransaction> exportTransactionOutputBinding,
             final ExecutionContext context) {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
-        final ExportTransaction requestBody = httpRequestMessage.getBody();
-        if (requestBody != null) {
+        final Optional<ExportTransaction> requestBody = httpRequestMessage.getBody();
+        if (requestBody.isPresent()) {
             ExportTransaction exportTransaction = new ExportTransaction(
                     String.valueOf(UUID.randomUUID()), //random id value for Partitionkey
                     String.valueOf(UUID.randomUUID()), //random id value for Rowkey
-                    requestBody.getOrigin(),
-                    requestBody.getDestination(),
-                    requestBody.getTransportationBy(),
-                    requestBody.getProductCategory(),
-                    requestBody.getProductName(),
-                    requestBody.getVatRate(),
-                    requestBody.getQuantity(),
-                    requestBody.getCost()
+                    requestBody.get().getOrigin(),
+                    requestBody.get().getDestination(),
+                    requestBody.get().getTransportationBy(),
+                    requestBody.get().getProductCategory(),
+                    requestBody.get().getProductName(),
+                    requestBody.get().getVatRate(),
+                    requestBody.get().getQuantity(),
+                    requestBody.get().getCost()
             );
             exportTransactionOutputBinding.setValue(exportTransaction);
             context.getLogger().info("Java Table Output function write a new entity with: "
